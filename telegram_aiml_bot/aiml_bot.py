@@ -4,12 +4,12 @@
 """
 This Bot uses the Updater class to handle the bot.
 
-First, a few handler functions are defined. Then, those functions are passed to
-the Dispatcher and registered at their respective places.
+A default handler functions is defined which passes all incoming text messages to the AIML engine.
 Then, the bot is started and runs until we press Ctrl-C on the command line.
 
 Usage:
-Basic Echobot example, repeats messages.
+Configure your Telegram bot parameters in the config.env file.
+Copy your AIML files into the AIML directory and start the app.
 Press Ctrl-C on the command line or send a signal to the process to stop the
 bot.
 """
