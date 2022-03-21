@@ -6,7 +6,7 @@ import telegram
 
 class Settings(BaseSettings):
     token: str = Field(env="TELEGRAM_BOT_TOKEN")
-    admins: List[str] = Field(env="LIST_OF_ADMINS")
+    admins: List[int] = Field(env="LIST_OF_ADMINS")
     use_telegram_callback: Boolean = Field(env="USE_TELEGRAM_CALLBACK")
     telegram_callback_url: str = Field(env="TELEGRAM_CALLBACK_URL")
     telegram_callback_port: int = Field(env="TELEGRAM_CALLBACK_PORT")

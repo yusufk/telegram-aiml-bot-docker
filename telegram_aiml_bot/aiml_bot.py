@@ -29,7 +29,7 @@ load_dotenv()  # take environment variables from .env.
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.WARN)
+                    level=logging.DEBUG)
 
 logger = logging.getLogger(__name__)
 
@@ -37,7 +37,9 @@ terminate = ['bye','buy','shutdown','exit','quit','gotosleep','goodbye']
 
 #Config
 list_of_admins = settings.admins
+logger.debug(list_of_admins)
 master_id = list_of_admins[0]
+logger.debug(master_id)
 defcon_level = 5
 lastMsg = ""
 lastMsgTime = time.time()-300 
