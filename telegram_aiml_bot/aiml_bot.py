@@ -27,22 +27,22 @@ from dotenv import load_dotenv
 
 load_dotenv()  # take environment variables from .env.
 
-# Enable logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.DEBUG)
-
-logger = logging.getLogger(__name__)
-
-terminate = ['bye','buy','shutdown','exit','quit','gotosleep','goodbye']
-
 #Config
 list_of_admins = settings.admins
-logger.debug(list_of_admins)
 master_id = list_of_admins[0]
-logger.debug(master_id)
-defcon_level = 5
-lastMsg = ""
-lastMsgTime = time.time()-300 
+
+# Enable logging
+if (settings.log_level == "DEBUG"):
+    logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                        level=logging.DEBUG)
+elif (settings.log_level == "INFO"):
+    logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                        level=logging.INFO)
+else:
+    logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                        level=logging.WARN)
+
+logger = logging.getLogger(__name__)
 
 # Initiate the aiml engine
 kernel = aiml.Kernel()
@@ -71,7 +71,13 @@ def restricted(func):
     return wrapped
 
 @restricted
-def jarvis(update: Update, context: CallbackContext):
+def admin(update: Update, context: CallbackContext):
+    update.message.reply_text('Telegram AIML Bot Admin example')
+
+def help(update: Update, context: CallbackContext):
+    update.message.reply_text('Created with Telegram AIML Bot by @yusufk')
+
+def aiml_handler(update: Update, context: CallbackContext):
     try:
         update.message.reply_text(kernel.respond(update.message.text))
     except:
@@ -91,8 +97,10 @@ def main():
     dp = updater.dispatcher
     # add handlers  
     # on different commands - answer in Telegram
-    dp.add_handler(MessageHandler(Filters.text, jarvis))
- 
+    dp.add_handler(CommandHandler("help", help))
+    dp.add_handler(CommandHandler("admin", admin))
+    dp.add_handler(MessageHandler(Filters.text, aiml_handler))
+    
     # log all errors
     dp.add_error_handler(error)
 

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telegram-aiml-bot-deployment
+  labels:
+        app: telegram-aiml-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: telegram-aiml-bot
+  template:
+    metadata:
+      labels:
+        app: telegram-aiml-bot
+    spec:
+      containers:
+        - name: telegram-aiml-bot-container
+          image: yusufk/telegram_aiml_bot:latest
+          envFrom:
+            - secretRef:
+                name: prod-secrets
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8443

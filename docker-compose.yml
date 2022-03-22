@@ -1,0 +1,7 @@
+services:
+  bot:
+    build: .
+    ports: 
+    - "8443:80"
+    restart: always
+    env_file: .env
